@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import Form from './Form';
 import Table from './Table';
 
 function MyApp() {
@@ -6,18 +7,7 @@ function MyApp() {
     {
       name: 'Charlie',
       job: 'Janitor',
-    },
-    {
-      name: 'Mac',
-      job: 'Bouncer',
-    },
-    {
-      name: 'Dee',
-      job: 'Aspring actress',
-    },
-    {
-      name: 'Dennis',
-      job: 'Bartender',
+       // the rest of the data
     },
   ]);
   
@@ -31,6 +21,7 @@ function MyApp() {
   return (
     <div className="container">
       <Table characterData={characters} removeCharacter={removeOneCharacter} />
+      <Form />
     </div>
   )
 }
