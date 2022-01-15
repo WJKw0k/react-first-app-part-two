@@ -38,10 +38,38 @@ function MyApp() {
 
   function updateList(person) { 
     makePostCall(person).then( result => {
-    if (result && result.status === 201)
-      setCharacters([...characters, person] );
+      if (result && result.status === 201) {
+        person = result.data;
+        setCharacters([...characters, person]);
+        console.log(result.data);
+      }
+      console.log(characters);
     });
   }
+
+  async function makeDeleteCall(person) {
+    try {
+      console.log("REEEEE " + person.id);
+      const response = await axios.delete('http://localhost:5000/users/' + person.id);
+      return response
+    }
+    catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  function deletePerson(index) {
+    const person = characters[index];
+    makeDeleteCall(person).then( result => {
+      if (result && result.status === 204) {
+        removeOneCharacter(index);
+      } else {
+        console.log("delete of " + person + " is unsuccessful.");
+      }
+    });
+  }
+
 
   function removeOneCharacter(index) {
     const updated = characters.filter((character, i) => {
@@ -52,7 +80,7 @@ function MyApp() {
 
   return (
     <div className="container">
-      <Table characterData={characters} removeCharacter={removeOneCharacter} />
+      <Table characterData={characters} removeCharacter={deletePerson} />
       <Form handleSubmit={updateList} />
     </div>
   )
